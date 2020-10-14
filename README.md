@@ -42,12 +42,7 @@ To select only the columns required for the target list of terms, first put all 
 
 #### 5. Select the relevant columns and save to txt
 ```sql
-SELECT umls.mrconso.cui, str, mrconso.sab, mrconso.tty, tui, sty, def 
-FROM umls.mrconso 
-LEFT JOIN umls.mrsty ON umls.mrsty.cui = umls.mrconso.cui 
-LEFT JOIN umls.mrdef ON umls.mrconso.cui = umls.mrdef.cui
+SELECT umls.mrconso.cui, str, mrconso.sab, mrconso.tty, tui, sty
+FROM umls.mrconso
+LEFT JOIN umls.mrsty ON umls.mrsty.cui = umls.mrconso.cui
 ```
-
-umcu
-umc-utrecht
-UMCUtrecht
