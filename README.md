@@ -11,7 +11,7 @@ After decompressing the `*-full.zip` file, go into the folder (`2020AA-full` for
 MetamorphoSys is used to install a subset of UMLS. During the installation process it is possible to select sources, and thereby crafting a specific subset for your use case. In our case, our primary goal is to select the Dutch terms.
 - Select Install UMLS
 - Select destination directory. For example `02_ExtractSubset/2020AA-dutch`.
-- Select the configuration file. This will select the sources I used for building the list of Dutch UMLS terms. The following sources are included.
+- Select the included configuration file `dutch_subset.prop`. This will select the sources I used for building the list of Dutch UMLS terms. The following sources are included.
 
 | Source name | Source Abbreviation | Last updated | Concepts |
 |---|---|---|---|
