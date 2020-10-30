@@ -50,7 +50,7 @@ You can use:
 #### 5. Create csv file 
 Select the relevant columns using your preferred way of interacting with SQL databases and save the results to a csv file. Also include the header.
 ```sql
-SELECT distinct umls.mrconso.cui, str, mrconso.sab, mrconso.tty, tui, sty
+SELECT distinct umls.mrconso.cui, str, mrconso.sab as onto, mrconso.tty, tui, sty
 FROM umls.mrconso
 LEFT JOIN umls.mrsty ON umls.mrsty.cui = umls.mrconso.cui
 ORDER BY umls.mrconso.cui ASC;
@@ -59,9 +59,20 @@ ORDER BY umls.mrconso.cui ASC;
 My output looked like this:
 ```bash
 % head -5 umls-dutch.csv 
-cui,str,sab,tty,tui,sty
+cui,str,onto,tty,tui,sty
 C0000696,A-zenuwvezels,MSHDUT,MH,T024,Tissue
 C0000715,Abattoir,MSHDUT,MH,T073,Manufactured Object
 C0000715,Abattoirs,MSHDUT,SY,T073,Manufactured Object
 C0000722,Abbreviated Injury Scale,MSHDUT,MH,T170,Intellectual Product
 ```
+
+Description of columns:
+
+| Column | Description | Example |
+|-|-|-|
+|cui| concept id | C0242379 (which is the UMLS concept identifier) |
+|str| term name | Longkanker|
+|tty| Term type in source | PN (Primary name; for others see https://www.nlm.nih.gov/research/umls/knowledge_sources/metathesaurus/release/abbreviations.html#TTY |
+|tui| Semantic type identifier | T047 (Based on UMLS) |
+|sty| Semantic type name | Disease or Syndrome (for T047) |
+|onto| Source Ontology | SNOMED, MSHDUT, MDRDUT, ICPC2EDUT, ICPCDUT (in UMLS this column is named SAB) |
