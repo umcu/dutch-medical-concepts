@@ -84,12 +84,12 @@ change the terms that have
 the value Designated preferred name (PT) for the Term Type in Source (TTY)  to the Metathesaurus preferred name (PN). 
 Most of the terms in the UMLS have the Metathesaurus preferred name in English. 
 However, these terms have been removed in the Dutch UMLS selection.
-To get the best preferred term from the available terms in Dutch UMLS take the term which was assigned as Designated preferred name. 
-For instance, when the Dutch UMLS is named `umls-dutch.csv`, the code could look as follow in which a modified csv file is returned. 
+To get the best preferred term from the available terms in Dutch UMLS take the term which was assigned as a Designated preferred name. 
+For instance, when the Dutch UMLS is named `umls-dutch.csv`, the code could look as follow in which a modified csv file (`umls-dutch-new.csv`) is exported. 
 
 
 ```bash
     data = pd.read_csv("umls-dutch.csv")
     data.loc[(data.tty == 'PT'),'tty']='PN'
-    data.to_csv("UMLS_new.csv")
+    data.to_csv("umls-dutch-new.csv")
 ```
