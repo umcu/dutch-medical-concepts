@@ -76,3 +76,20 @@ Description of columns:
 |tui| Semantic type identifier | T047 (Based on UMLS) |
 |sty| Semantic type name | Disease or Syndrome (for T047) |
 |onto| Source Ontology | SNOMED, MSHDUT, MDRDUT, ICPC2EDUT, ICPCDUT (in UMLS this column is named SAB) |
+
+#### 6. Get correct preferred name
+
+To get the correct preferred name for the Dutch terms, 
+change the terms that have 
+the value Designated preferred name (PT) for the Term Type in Source (TTY)  to the Metathesaurus preferred name (PN). 
+Most of the terms in the UMLS have the Metathesaurus preferred name in English. 
+However, these terms have been removed in the Dutch UMLS selection.
+To get the best preferred term from the available names take the term which were assigned as Designated preferred name. 
+
+
+
+```bash
+    data = pd.read_csv("umls-dutch.csv")
+    data.loc[(data.tty == 'PT'),'tty']='PN'
+    data.to_csv("UMLS_new.csv")
+```
