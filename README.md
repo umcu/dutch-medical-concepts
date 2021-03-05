@@ -9,10 +9,11 @@ After decompressing the `*-full.zip` file, go into the folder (`2020AA-full` for
 
 #### 3. Select Dutch terms in MetamorphoSys
 MetamorphoSys is used to install a subset of UMLS. During the installation process it is possible to select sources, and thereby crafting a specific subset for your use case. In our case, our primary goal is to select the Dutch terms.
-- Select Install UMLS
+- Select `Install UMLS`.
 - Select destination directory.
-- Keep all checkboxes marked, and Select `MySQL 5.6` under `Choose Database load scripts`. Select `OK`
-- Select `New Configuration...`, Click `Accept` and click `Ok`. The default subset does not matter because we are making our own subset in the next step.
+- Keep `Metathesaurus` checked, and uncheck `Semantic Network` and `SPECIALIST Lexicon & Lexical Tools`. Select `OK`.
+- Select `New Configuration...`, click `Accept` and click `Ok`. The `Default Subset` does not matter because we are making our own subset in the next step.
+- In the `Output Options` tab, select `MySQL 5.6` under `Select database`.
 - In the `Source List` tab, Select `Select sources to INCLUDE in subset`. I sorted the sources on the language column and selected the 7 Dutch sources. To select multiple sources, hold the CMD key on macOS. In the popup window that will ask if you also want to include related sources, click `Cancel`.
 
 | Source name | Source Abbreviation | Last updated | Concepts |
