@@ -1,6 +1,9 @@
 .idea
 .DS_Store
 .gitignore
+01_Download/
+02_ExtractSubset/
+03_SQL_DB/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
