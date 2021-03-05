@@ -44,9 +44,31 @@ Time elapsed:.........................00:06:58
 #### 4. Load all terms in a SQL database
 To select only the columns required for the target list of terms, first put all the resulting subset in a SQL DB. 
 
-You can use:
-- The SQL load script which we created with the subset and follow the instructions (https://www.nlm.nih.gov/research/umls/implementation_resources/scripts/README_RRF_MySQL_Output_Stream.html) 
-- Zeljko's (MedCAT developer) `umls` repo (https://github.com/w-is-h/umls)
+```bash
+# Create local .env file
+cp .env-example .env
+
+# Set local file paths & MySQL root password in .env
+
+# Set MySQL loading config settings 
+vim <local_umls_subset_dir>/2020AA/META/populate_mysql_db.sh
+
+# MYSQL_HOME=/usr
+# user=root
+# password=<secret_password>
+# db_name=umls
+
+# Start MySQL container in Docker
+docker-compose up -d
+
+# Enter docker container
+docker exec -it umls bash
+
+# Execute mysql loading script
+bash /src_files/2020AA/META/populate_mysql_db.sh
+```
+
+The official documentation for loading UMLS in a MySQL DB can be found at [here](https://www.nlm.nih.gov/research/umls/implementation_resources/scripts/README_RRF_MySQL_Output_Stream.html).
 
 #### 5. Create csv file 
 Select the relevant columns using your preferred way of interacting with SQL databases and save the results to a csv file. Also include the header.
