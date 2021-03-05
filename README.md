@@ -1,6 +1,16 @@
 # Dutch UMLS
 This repository contains instructions and code to create for a subset of UMLS containing Dutch medical terms, usable for named entity linking.
 
+Recommended folder structure for data (these folders are added to `.gitignore`):
+```
+dutch-umls
+└───00_Archive
+└───01_Download
+└───02_ExtractSubset
+└───03_SqlDB
+└───04_ConceptDB
+```
+
 #### 1. Obtain license and download complete UMLS
 To download UMLS, visit the [NIH National Library of Medicine website](https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html). You'll have to apply for a license before you can download the files. In the following description I downloaded the 2020AA release `umls-2020AA-full.zip`.
 

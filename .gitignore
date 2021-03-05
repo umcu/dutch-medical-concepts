@@ -1,9 +1,13 @@
 .idea
 .DS_Store
 .gitignore
+
+# Local folder structure for data
+00_Archive/
 01_Download/
 02_ExtractSubset/
-03_SQL_DB/
+03_SqlDB/
+04_ConceptDB/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
