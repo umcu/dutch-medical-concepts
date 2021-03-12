@@ -88,8 +88,8 @@ To get the best preferred term from the available terms in Dutch UMLS take the t
 For instance, when the Dutch UMLS is named `umls-dutch.csv`, the code could look as follow in which a modified csv file (`umls-dutch-new.csv`) is exported. 
 
 
-```bash
-    data = pd.read_csv("umls-dutch.csv")
+```python
+    data = pd.read_csv("umls-dutch.csv", index=False)
     data.loc[(data.tty == 'PT'),'tty']='PN'
     data.to_csv("umls-dutch-new.csv")
 ```
