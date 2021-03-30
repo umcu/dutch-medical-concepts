@@ -7,8 +7,8 @@ services:
     ports:
       - 3306:3306
     environment:
-      - MYSQL_DATABASE: umls
-      - MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=umls
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
       - ${UMLS_DB_DIR}:/var/lib/mysql/:rw
       - ${SRC_FILE_DIR}:/src_files/:rw

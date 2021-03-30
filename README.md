@@ -80,10 +80,23 @@ bash /src_files/2020AA/META/populate_mysql_db.sh
 
 The official documentation for loading UMLS in a MySQL DB can be found at [here](https://www.nlm.nih.gov/research/umls/implementation_resources/scripts/README_RRF_MySQL_Output_Stream.html).
 
-#### 5. Create csv file 
-Select the relevant columns using your preferred way of interacting with SQL databases and save the results to a csv file. Also include the header.
+#### 5. Create concept table
+
+Target file should have the following columns:
+
+| Column | Description | Example values |
+|-|-|-|
+|cui| concept id | C0242379 |
+|str| term name | Longkanker|
+|tty| Term type in source | PN (Primary name), SY (Synonym), for others see https://www.nlm.nih.gov/research/umls/knowledge_sources/metathesaurus/release/abbreviations.html#TTY |
+|tui| Semantic type identifier | T047 (Based on UMLS) |
+|sty| Semantic type name | Disease or Syndrome (for T047) |
+|sab| Source Ontology | SNOMEDCT_US, MSHDUT, MDRDUT, ICPC2EDUT, ICPCDUT, or something custom |
+
+##### Fast, rough method
+Select the relevant columns using your preferred way of interacting with SQL databases and save the results to a CSVfile. Also include the header. A quick way to do this, would be:
 ```sql
-SELECT distinct umls.mrconso.cui, str, mrconso.sab as onto, mrconso.tty, tui, sty
+SELECT distinct umls.mrconso.cui, str, mrconso.sab, mrconso.tty, tui, sty
 FROM umls.mrconso
 LEFT JOIN umls.mrsty ON umls.mrsty.cui = umls.mrconso.cui
 ORDER BY umls.mrconso.cui ASC;
@@ -99,30 +112,11 @@ C0000715,Abattoirs,MSHDUT,SY,T073,Manufactured Object
 C0000722,Abbreviated Injury Scale,MSHDUT,MH,T170,Intellectual Product
 ```
 
-Description of columns:
+#### Fine-tuned, filtered method
+Some source vocabularies contain type of concepts which are not useful for entity 
+linking. Also, Dutch UMLS does not contain many drug names. For a step-by-step
+method that removes irrelevant types and adds Dutch drug names from SNOMED, see
+[dutch-umls_to_concept-table.ipynb](dutch-umls_to_concept-table.ipynb).
 
-| Column | Description | Example |
-|-|-|-|
-|cui| concept id | C0242379 (which is the UMLS concept identifier) |
-|str| term name | Longkanker|
-|tty| Term type in source | PN (Primary name; for others see https://www.nlm.nih.gov/research/umls/knowledge_sources/metathesaurus/release/abbreviations.html#TTY |
-|tui| Semantic type identifier | T047 (Based on UMLS) |
-|sty| Semantic type name | Disease or Syndrome (for T047) |
-|onto| Source Ontology | SNOMED, MSHDUT, MDRDUT, ICPC2EDUT, ICPCDUT (in UMLS this column is named SAB) |
-
-#### 6. Get correct preferred name
-
-To get the correct preferred name for the Dutch terms, 
-change the terms that have 
-the value Designated preferred name (PT) for the Term Type in Source (TTY)  to the Metathesaurus preferred name (PN). 
-Most of the terms in the UMLS have the Metathesaurus preferred name in English. 
-However, these terms have been removed in the Dutch UMLS selection.
-To get the best preferred term from the available terms in Dutch UMLS take the term which was assigned as a Designated preferred name. 
-For instance, when the Dutch UMLS is named `umls-dutch.csv`, the code could look as follow in which a modified csv file (`umls-dutch-new.csv`) is exported. 
-
-
-```python
-    data = pd.read_csv("umls-dutch.csv", index=False)
-    data.loc[(data.tty == 'PT'),'tty']='PN'
-    data.to_csv("umls-dutch-new.csv")
-```
+This also methods use of the SNOMED concept table which is created in
+[dutch-snomed_to_concept-table.ipynb](dutch-umls_to_concept-table.ipynb).
