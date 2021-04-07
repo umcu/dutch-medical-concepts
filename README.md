@@ -105,7 +105,7 @@ ORDER BY umls.mrconso.cui ASC;
 My output looked like this:
 ```bash
 % head -5 umls-dutch.csv 
-cui,str,onto,tty,tui,sty
+cui,str,sab,tty,tui,sty
 C0000696,A-zenuwvezels,MSHDUT,MH,T024,Tissue
 C0000715,Abattoir,MSHDUT,MH,T073,Manufactured Object
 C0000715,Abattoirs,MSHDUT,SY,T073,Manufactured Object
@@ -119,4 +119,4 @@ method that removes irrelevant types and adds Dutch drug names from SNOMED, see
 [dutch-umls_to_concept-table.ipynb](dutch-umls_to_concept-table.ipynb).
 
 This also methods use of the SNOMED concept table which is created in
-[dutch-snomed_to_concept-table.ipynb](dutch-umls_to_concept-table.ipynb).
+[dutch-snomed_to_concept-table.ipynb](dutch-snomed_to_concept-table.ipynb).
