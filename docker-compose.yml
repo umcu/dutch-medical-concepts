@@ -2,13 +2,14 @@ version: '3'
 services:
   umls:
     container_name: umls
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     image: mysql:5.7
     restart: always
     ports:
       - 3306:3306
     environment:
-      - MYSQL_DATABASE=umls
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
     volumes:
       - ${UMLS_DB_DIR}:/var/lib/mysql/:rw
       - ${SRC_FILE_DIR}:/src_files/:rw
