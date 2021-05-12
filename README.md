@@ -96,10 +96,10 @@ Target file should have the following columns:
 ##### Fast, rough method
 Select the relevant columns using your preferred way of interacting with SQL databases and save the results to a CSVfile. Also include the header. A quick way to do this, would be:
 ```sql
-SELECT distinct umls.mrconso.cui, str, mrconso.sab, mrconso.tty, tui, sty
-FROM umls.mrconso
-LEFT JOIN umls.mrsty ON umls.mrsty.cui = umls.mrconso.cui
-ORDER BY umls.mrconso.cui ASC;
+SELECT distinct MRCONSO.cui, str, MRCONSO.sab, MRCONSO.tty, tui, sty
+FROM MRCONSO
+LEFT JOIN MRSTY ON MRSTY.cui = MRCONSO.cui
+ORDER BY MRCONSO.cui ASC;
 ```
 
 My output looked like this:
