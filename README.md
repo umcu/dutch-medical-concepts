@@ -81,42 +81,44 @@ bash /src_files/2020AA/META/populate_mysql_db.sh
 The official documentation for loading UMLS in a MySQL DB can be found at [here](https://www.nlm.nih.gov/research/umls/implementation_resources/scripts/README_RRF_MySQL_Output_Stream.html).
 
 #### 5. Create concept table
+Target file should follow the specifications defined in the [MedCAT repository](https://github.com/CogStack/MedCAT/blob/master/examples/README.md).
 
-Target file should have the following columns:
+In short:
 
 | Column | Description | Example values |
 |-|-|-|
 |cui| concept id | C0242379 |
-|str| term name | Longkanker|
-|tty| Term type in source | PN (Primary name), SY (Synonym), for others see https://www.nlm.nih.gov/research/umls/knowledge_sources/metathesaurus/release/abbreviations.html#TTY |
-|tui| Semantic type identifier | T047 (Based on UMLS) |
-|sty| Semantic type name | Disease or Syndrome (for T047) |
-|sab| Source Ontology | SNOMEDCT_US, MSHDUT, MDRDUT, ICPC2EDUT, ICPCDUT, or something custom |
+|name| term name | Longkanker|
+|name_status| Term type in source | PN (Primary name), SY (Synonym), for others see https://www.nlm.nih.gov/research/umls/knowledge_sources/metathesaurus/release/abbreviations.html#TTY |
+|semantic_type_id| Semantic type identifier | T047 (Based on UMLS) |
+|ontologies| Source Ontology | SNOMEDCT_US, MSHDUT, MDRDUT, ICPC2EDUT, ICPCDUT, or something custom |
+
+Column `sty` (semantic type name) was removed. This information can still be extracted from: [NIH NLM Semantic Network](https://lhncbc.nlm.nih.gov/semanticnetwork/download/SemGroups.txt).
 
 ##### Fast, rough method
-Select the relevant columns using your preferred way of interacting with SQL databases and save the results to a CSVfile. Also include the header. A quick way to do this, would be:
+Select the relevant columns using your preferred way of interacting with SQL databases and save the results to a CSV-file. Also include the header. A quick way to do this, would be:
 ```sql
-SELECT distinct MRCONSO.cui, str, MRCONSO.sab, MRCONSO.tty, tui, sty
+SELECT distinct MRCONSO.cui, str as name, sab as ontologies, tty as name_status, tui as semantic_type_id
 FROM MRCONSO
 LEFT JOIN MRSTY ON MRSTY.cui = MRCONSO.cui
 ORDER BY MRCONSO.cui ASC;
 ```
 
-My output looked like this:
+The output should look like this:
 ```bash
 % head -5 umls-dutch.csv 
-cui,str,sab,tty,tui,sty
-C0000696,A-zenuwvezels,MSHDUT,MH,T024,Tissue
-C0000715,Abattoir,MSHDUT,MH,T073,Manufactured Object
-C0000715,Abattoirs,MSHDUT,SY,T073,Manufactured Object
-C0000722,Abbreviated Injury Scale,MSHDUT,MH,T170,Intellectual Product
+cui,name,ontologies,name_status,semantic_type_id
+C0000696,A-zenuwvezels,MSHDUT,PN,T024
+C0000715,Abattoir,MSHDUT,PN,T073
+C0000715,Abattoirs,MSHDUT,SY,T073
+C0000722,Abbreviated Injury Scale,MSHDUT,PN,T170
 ```
 
 #### Fine-tuned, filtered method
 Some source vocabularies contain type of concepts which are not useful for entity 
 linking. Also, Dutch UMLS does not contain many drug names. For a step-by-step
-method that removes irrelevant types and adds Dutch drug names from SNOMED, see
+method that removes irrelevant types and adds Dutch SNOMED terms, see
 [dutch-umls_to_concept-table.ipynb](dutch-umls_to_concept-table.ipynb).
 
-This also methods use of the SNOMED concept table which is created in
+This notebook requires having a SNOMED concept table, which can be created in
 [dutch-snomed_to_concept-table.ipynb](dutch-snomed_to_concept-table.ipynb).
