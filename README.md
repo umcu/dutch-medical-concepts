@@ -90,7 +90,7 @@ In short:
 |cui| concept id | C0242379 |
 |name| term name | Longkanker|
 |name_status| Term type in source | PN (Primary name), SY (Synonym), for others see https://www.nlm.nih.gov/research/umls/knowledge_sources/metathesaurus/release/abbreviations.html#TTY |
-|semantic_type_id| Semantic type identifier | T047 (Based on UMLS) |
+|type_ids| Semantic type identifier | T047 (Based on UMLS) |
 |ontologies| Source Ontology | SNOMEDCT_US, MSHDUT, MDRDUT, ICPC2EDUT, ICPCDUT, or something custom |
 
 Column `sty` (semantic type name) was removed. This information can still be extracted from: [NIH NLM Semantic Network](https://lhncbc.nlm.nih.gov/semanticnetwork/download/SemGroups.txt).
@@ -98,7 +98,7 @@ Column `sty` (semantic type name) was removed. This information can still be ext
 ##### Fast, rough method
 Select the relevant columns using your preferred way of interacting with SQL databases and save the results to a CSV-file. Also include the header. A quick way to do this, would be:
 ```sql
-SELECT distinct MRCONSO.cui, str as name, sab as ontologies, tty as name_status, tui as semantic_type_id
+SELECT distinct MRCONSO.cui, str as name, sab as ontologies, tty as name_status, tui as type_ids
 FROM MRCONSO
 LEFT JOIN MRSTY ON MRSTY.cui = MRCONSO.cui
 ORDER BY MRCONSO.cui ASC;
@@ -107,7 +107,7 @@ ORDER BY MRCONSO.cui ASC;
 The output should look like this:
 ```bash
 % head -5 umls-dutch.csv 
-cui,name,ontologies,name_status,semantic_type_id
+cui,name,ontologies,name_status,type_ids
 C0000696,A-zenuwvezels,MSHDUT,PN,T024
 C0000715,Abattoir,MSHDUT,PN,T073
 C0000715,Abattoirs,MSHDUT,SY,T073
