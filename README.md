@@ -12,10 +12,10 @@ dutch-umls
 ```
 
 #### 1. Obtain license and download complete UMLS
-To download UMLS, visit the [NIH National Library of Medicine website](https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html). You'll have to apply for a license before you can download the files. In the following description I downloaded the 2020AA release `umls-2020AA-full.zip`.
+To download UMLS, visit the [NIH National Library of Medicine website](https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html). You'll have to apply for a license before you can download the files. In the following description I downloaded the 2021AA release `umls-2021AA-full.zip`.
 
 #### 2. Decompress and install MetamorphoSys
-After decompressing the `*-full.zip` file, go into the folder (`2020AA-full` for me) and decompress `mmsys.zip`. Afterwards, move the files in the new `mmsys` folder one level up, so they are in `2020AA-full`. Next, run MetamorphoSys (`./run_mac.sh` on macOS)
+After decompressing the `*-full.zip` file, go into the folder (`2021AA-full` for me) and decompress `mmsys.zip`. Afterwards, move the files in the new `mmsys` folder one level up, so they are in `2021AA-full`. Next, run MetamorphoSys (`./run_mac.sh` on macOS)
 
 #### 3. Select Dutch terms in MetamorphoSys
 MetamorphoSys is used to install a subset of UMLS. During the installation process it is possible to select sources, and thereby crafting a specific subset for your use case. In our case, our primary goal is to select the Dutch terms.
@@ -61,7 +61,7 @@ cp .env-example .env
 # Set local file paths & MySQL root password in .env
 
 # Set MySQL loading config settings 
-vim <local_umls_subset_dir>/2020AA/META/populate_mysql_db.sh
+vim <local_umls_subset_dir>/2021AA/META/populate_mysql_db.sh
 
 # MYSQL_HOME=/usr
 # user=root
@@ -75,7 +75,8 @@ docker-compose up -d
 docker exec -it umls bash
 
 # Execute mysql loading script
-bash /src_files/2020AA/META/populate_mysql_db.sh
+cd /src_files/2021AA/META/
+bash populate_mysql_db.sh
 ```
 
 The official documentation for loading UMLS in a MySQL DB can be found at [here](https://www.nlm.nih.gov/research/umls/implementation_resources/scripts/README_RRF_MySQL_Output_Stream.html).
