@@ -11,13 +11,13 @@ dutch-umls
 └───04_ConceptDB
 ```
 
-#### 1. Obtain license and download complete UMLS
+## 1. Obtain license and download complete UMLS
 To download UMLS, visit the [NIH National Library of Medicine website](https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html). You'll have to apply for a license before you can download the files. In the following description I downloaded the 2021AA release `umls-2021AA-full.zip`.
 
-#### 2. Decompress and install MetamorphoSys
+## 2. Decompress and install MetamorphoSys
 After decompressing the `*-full.zip` file, go into the folder (`2021AA-full` for me) and decompress `mmsys.zip`. Afterwards, move the files in the new `mmsys` folder one level up, so they are in `2021AA-full`. Next, run MetamorphoSys (`./run_mac.sh` on macOS)
 
-#### 3. Select Dutch terms in MetamorphoSys
+## 3. Select Dutch terms in MetamorphoSys
 MetamorphoSys is used to install a subset of UMLS. During the installation process it is possible to select sources, and thereby crafting a specific subset for your use case. In our case, our primary goal is to select the Dutch terms.
 - Select `Install UMLS`.
 - Select destination directory.
@@ -51,7 +51,7 @@ Atom history entries..................266854
 Time elapsed:.........................00:06:58
 ```
 
-#### 4. Load all terms in a SQL database
+## 4. Load all terms in a SQL database
 To select only the columns required for the target list of terms, first put all the resulting subset in a SQL DB. 
 
 ```bash
@@ -81,7 +81,24 @@ bash populate_mysql_db.sh
 
 The official documentation for loading UMLS in a MySQL DB can be found at [here](https://www.nlm.nih.gov/research/umls/implementation_resources/scripts/README_RRF_MySQL_Output_Stream.html).
 
-#### 5. Create concept table
+## 5. Create concept table
+
+### Preferred method: Fine-tuned and filtered
+Some source vocabularies contain concept types that are not useful for entity 
+linking. Also, Dutch vocabularies in UMLS do not contain many drug names. Use 
+[dutch-umls_to_concept-table.ipynb](dutch-umls_to_concept-table.ipynb) to:
+  - Download concepts, names and types from the MySQL database
+  - Remove irrelevant concepts based on term type in source vocabulary
+  - Remove irrelevant concepts based on UMLS type
+  - Remove problematic names for Dutch language
+  - Add many concepts and synonyms from Dutch SNOMED
+  - Add custom names
+  - Save the concept table in a format compatible with MedCAT
+
+Note: This requires a Dutch SNOMED concept table, which can be created in
+[dutch-snomed_to_concept-table.ipynb](dutch-snomed_to_concept-table.ipynb).
+
+### Alternate method: rough & fast
 Target file should follow the specifications defined in the [MedCAT repository](https://github.com/CogStack/MedCAT/blob/master/examples/README.md).
 
 In short:
@@ -96,7 +113,6 @@ In short:
 
 Column `sty` (semantic type name) was removed. This information can still be extracted from: [NIH NLM Semantic Network](https://lhncbc.nlm.nih.gov/semanticnetwork/download/SemGroups.txt).
 
-##### Fast, rough method
 Select the relevant columns using your preferred way of interacting with SQL databases and save the results to a CSV-file. Also include the header. A quick way to do this, would be:
 ```sql
 SELECT distinct MRCONSO.cui, str as name, sab as ontologies, tty as name_status, tui as type_ids
@@ -115,11 +131,3 @@ C0000715,Abattoirs,MSHDUT,SY,T073
 C0000722,Abbreviated Injury Scale,MSHDUT,PN,T170
 ```
 
-#### Fine-tuned, filtered method
-Some source vocabularies contain type of concepts which are not useful for entity 
-linking. Also, Dutch UMLS does not contain many drug names. For a step-by-step
-method that removes irrelevant types and adds Dutch SNOMED terms, see
-[dutch-umls_to_concept-table.ipynb](dutch-umls_to_concept-table.ipynb).
-
-This notebook requires having a SNOMED concept table, which can be created in
-[dutch-snomed_to_concept-table.ipynb](dutch-snomed_to_concept-table.ipynb).
