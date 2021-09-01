@@ -83,6 +83,12 @@ The official documentation for loading UMLS in a MySQL DB can be found at [here]
 
 ## 5. Create concept table
 
+### Setup environment
+Install the required Python Packages with PIP:
+```bash
+pip install -r requirements.txt
+```
+
 ### Preferred method: Fine-tuned and filtered
 Some source vocabularies contain concept types that are not useful for entity 
 linking. Also, Dutch vocabularies in UMLS do not contain many drug names. Use 
