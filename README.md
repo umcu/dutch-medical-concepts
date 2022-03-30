@@ -1,6 +1,38 @@
 # Dutch UMLS
-This repository contains instructions and code to create for a subset of UMLS containing Dutch medical terms, usable for named entity linking.
+This repository contains instructions and code to create a subset of UMLS, including MeSH, MedDRA and ICD-10, of Dutch medical concepts. By combining UMLS concepts with Dutch SNOMED CT terms and English drug names, a list of terms commonly used in Dutch medical language can be generated: ~800,000 names in ~300,000 concepts. The resulting CSV can be used for named entity linking methods, such as MedCAT (https://github.com/CogStack/MedCAT). Data and licenses to use UMLS and SNOMED CT should be acquired by the user from the UMLS and SNOMED CT websites.
 
+<!-- TOC depthFrom:2 depthTo:2 withLinks:1 updateOnSave:1 orderedList:0 -->
+
+- [Output format](#output-format)
+- [1. Obtain license and download complete UMLS](#1-obtain-license-and-download-complete-umls)
+- [2. Decompress and install MetamorphoSys](#2-decompress-and-install-metamorphosys)
+- [3. Select Dutch terms in MetamorphoSys](#3-select-dutch-terms-in-metamorphosys)
+- [4. Load all terms in a SQL database](#4-load-all-terms-in-a-sql-database)
+- [5. Create concept table](#5-create-concept-table)
+
+<!-- /TOC -->
+
+## Output format
+
+| cui      | name                     | ontologies           | name_status | type_ids |
+|----------|--------------------------|----------------------|-------------|----------|
+| C0000001 | kanker                   | ONTOLOGY1\|ONTOLOGY2 | P           | T001     |
+| C0000001 | neoplasma maligne        | ONTOLOGY1            | A           | T001     |
+| C0000002 | longkanker               | ONTOLOGY1            | P           | T001     |
+| C0000003 | kleincellige longkanker  | ONTOLOGY1            | P           | T001     |
+| C0000004 | chirurgie                | ONTOLOGY1            | P           | T002     |
+| C0000004 | chirurgische verrichting | ONTOLOGY1            | A           | T002     |
+| C0000005 | chirurgie                | ONTOLOGY1            | P           | T003     |
+| C0000005 | specialisme chirurgie    | ONTOLOGY1            | A           | T003     |
+
+See https://github.com/CogStack/MedCAT/tree/master/examples.
+
+I'm not sure whether the UMLS license allows for publishing snippets of UMLS for demonstration purposes, so this repository uses mock data in the examples.
+
+## 1. Obtain license and download complete UMLS
+To download UMLS, visit the [NIH National Library of Medicine website](https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html). You'll have to apply for a license before you can download the files. In the following description I downloaded the 2021AA release `umls-2021AA-full.zip`.
+
+## 2. Decompress and install MetamorphoSys
 Recommended folder structure for data (these folders are added to `.gitignore`):
 ```
 dutch-umls
@@ -11,10 +43,6 @@ dutch-umls
 └───04_ConceptDB
 ```
 
-## 1. Obtain license and download complete UMLS
-To download UMLS, visit the [NIH National Library of Medicine website](https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html). You'll have to apply for a license before you can download the files. In the following description I downloaded the 2021AA release `umls-2021AA-full.zip`.
-
-## 2. Decompress and install MetamorphoSys
 After decompressing the `*-full.zip` file, go into the folder (`2021AA-full` for me) and decompress `mmsys.zip`. Afterwards, move the files in the new `mmsys` folder one level up, so they are in `2021AA-full`. Next, run MetamorphoSys (`./run_mac.sh` on macOS)
 
 ## 3. Select Dutch terms in MetamorphoSys
@@ -111,7 +139,7 @@ In short:
 
 | Column | Description | Example values |
 |-|-|-|
-|cui| concept id | C0242379 |
+|cui| concept id | C0000001 |
 |name| term name | Longkanker|
 |name_status| Term type in source | PN (Primary name), SY (Synonym), for others see https://www.nlm.nih.gov/research/umls/knowledge_sources/metathesaurus/release/abbreviations.html#TTY |
 |type_ids| Semantic type identifier | T047 (Based on UMLS) |
@@ -131,9 +159,8 @@ The output should look like this:
 ```bash
 % head -5 umls-dutch.csv 
 cui,name,ontologies,name_status,type_ids
-C0000696,A-zenuwvezels,MSHDUT,PN,T024
-C0000715,Abattoir,MSHDUT,PN,T073
-C0000715,Abattoirs,MSHDUT,SY,T073
-C0000722,Abbreviated Injury Scale,MSHDUT,PN,T170
+C0000001,A-zenuwvezels,ONTOLOGY1,PN,T001
+C0000002,Abattoir,ONTOLOGY1,PN,T002
+C0000002,Abattoirs,ONTOLOGY1,SY,T002
+C0000003,Abbreviated Injury Scale,ONTOLOGY1,PN,T003
 ```
-
