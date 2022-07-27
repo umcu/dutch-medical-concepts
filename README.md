@@ -178,7 +178,7 @@ C0000003,Abbreviated Injury Scale,ONTOLOGY1,PN,T003
 
 ## Generate MedCAT models
 To generate MedCAT models from the concept table, see the instructions in the [MedCAT](https://github.com/CogStack/MedCAT) repository. For Dutch language, use these parameters in the configuration:
-```
+```python
 # Set Dutch spaCy model. The small or medium models should also be fine.
 cat.general.spacy_model = 'nl_core_news_lg'
 
@@ -188,3 +188,5 @@ cat.general.diacritics = True
 # This distinguishes "ALS" (the disease) from "als" (voegwoord en voorzetsel).
 cat.ner.check_upper_case_names = True
 ```
+
+MedCAT contains functionality for unsupervised training to solve ambiguity of medical concepts. A relatively easy way to do this is by providing Dutch medical wikipedia articles. Although this is not representable for clinical language used in EHRs, the resulting model performs surprisingly well. See [dutch-medical-wikipedia](https://github.com/umcu/dutch-medical-wikipedia) for instructions on how to generate this dataset.
