@@ -1,7 +1,11 @@
-# Dutch UMLS
-This repository contains instructions and code to create a subset of UMLS, including MeSH, MedDRA and ICD-10, of Dutch medical concepts. By combining UMLS concepts with Dutch SNOMED CT terms and English drug names, a list of terms commonly used in Dutch medical language can be generated: ~800,000 names in ~300,000 concepts. The resulting CSV can be used for named entity linking methods, such as [MedCAT](https://github.com/CogStack/MedCAT). Data and usage licenses should be acquired from [UMLS Terminology Services](https://uts.nlm.nih.gov/uts/) and [SNOMED](https://mlds.ihtsdotools.org/).
+# Dutch Medical Concepts
+This repository contains instructions and code to create a subset of Dutch medical concepts from UMLS, which includes MeSH, MedDRA, ICD-10 and ICPC, and SNOMED CT concepts. By combining Dutch names from UMLS, SNOMED CT and English drug names, a table of primary names, synonyms and abbreviations commonly used in Dutch medical language is generated: ~800,000 names in ~300,000 concepts. The concept table can be used for named entity recognition and linking, such as [MedCAT](https://github.com/CogStack/MedCAT), on Dutch medical text.
 
-This workflow was written for creating and filtering a set of Dutch UMLS concepts, but with some modifications it should be possible to use this for other languages.
+A workflow for creating a concept table based solely on Dutch SNOMED CT  is also present in this repository.
+
+Data and usage licenses should be acquired from [UMLS Terminology Services](https://uts.nlm.nih.gov/uts/) and [SNOMED](https://mlds.ihtsdotools.org/).
+
+This workflow was written for creating and filtering a set of Dutch concepts, but with some modifications it should be possible to use this for other languages.
 
 ## Table of Contents
 - [Download Dutch MedCAT models](#download-dutch-medcat-models)
@@ -36,13 +40,13 @@ See https://github.com/CogStack/MedCAT/tree/master/examples for a detailed expla
 
 I'm not sure whether the UMLS license allows for publishing snippets of UMLS data for demonstration purposes, so this repository uses mock data in the examples.
 
-### 1. Obtain license and download complete UMLS
-To download UMLS, visit the [NIH National Library of Medicine website](https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html). You'll have to apply for a license before you can download the files. In the following description I downloaded the 2022AB release `umls-2022AB-full.zip`.
+### 1. Obtain license and download complete UMLS and 
+To download UMLS, visit the [NIH National Library of Medicine website](https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html). You'll have to apply for a license before you can download the files on https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html. In the following description I downloaded `Full Release (umls-2022AB-full.zip)`. The advantage over `UMLS Metathesaurus Full Subset` is that the Full Release includes MetamorphoSys which makes it possible to create a subset of UMLS prior loading the data in a SQL database. This significantly decreases the required disk space and processing time.
 
 ### 2. Decompress and install MetamorphoSys
 Recommended folder structure for data (these folders are added to `.gitignore`):
 ```
-dutch-umls
+dutch-medical-concepts
 └───00_Archive
 └───01_Download
 └───02_ExtractSubset
@@ -50,20 +54,20 @@ dutch-umls
 └───04_ConceptDB
 ```
 
-After decompressing the `*-full.zip` file, go into the folder (`2022AB-full` for me) and decompress `mmsys.zip`. Afterwards, move the files in the new `mmsys` folder one level up, so they are in `2022AB-full`. Next, run MetamorphoSys (`./run_mac.sh` on macOS)
+After decompressing the `*-full.zip` file, go into the folder (`2022AB-full` in this example) and decompress `mmsys.zip`. Afterwards, move the files in the new `mmsys` folder one level up, so they are in `2022AB-full`. Next, run MetamorphoSys (`./run_mac.sh` on macOS)
 
 ### 3. Select UMLS concepts for Dutch medical language using MetamorphoSys
 MetamorphoSys is used to install a subset of UMLS. During the installation process it is possible to select multiple sources, and thereby to craft a specific subset for your use case. In our case, our primary goal is to select the Dutch terms and we add some English sources for concept categories for common used English names in Dutch (such as drug names).
 
 - Select `Install UMLS`.
-- Select destination directory, for example `./02_ExtractSubset/2022AB/
+- Select destination directory, for example `./02_ExtractSubset/2022AB/`
 - Keep `Metathesaurus` checked, and uncheck `Semantic Network` and `SPECIALIST Lexicon & Lexical Tools`. Select `OK`.
 - Select `New Configuration...`, click `Accept` and click `Ok`. The `Default Subset` does not matter because we are making our own subset in the next step.
 - In the `Output Options` tab, select `MySQL 5.6` under `Select database`.
-- In the `Source List` tab, Select `Select sources to INCLUDE in subset`. Sort the sources on the language column and at least select the 7 Dutch sources. To select multiple sources, hold the CMD key on macOS. In the popup window that will ask if you also want to include related sources, click `Cancel`. Statistics for Dutch sources in `UMLS 2022AB-full`:
+- In the `Source List` tab, Select `Select sources to INCLUDE in subset`. Sort the sources on the language column and at least select the 7 Dutch sources. To select multiple sources, hold the CMD key on macOS. In the popup window that will ask if you also want to include related sources, click `Cancel`. The Dutch sources I included were:
 
 | Source name | Source ID |
-|---|---|---|---|
+|---|---|
 | ICD10, Dutch Translation, 200403 | ICD10DUT_200403 |
 | ICPC2-ICD10 Thesaurus, Dutch Translation | ICPC2ICD10DUT_200412 |
 | ICPC2E Dutch | ICPC2EDUT_200203 |
@@ -72,11 +76,13 @@ MetamorphoSys is used to install a subset of UMLS. During the installation proce
 | MedDRA Dutch | MDRDUT25_0 |
 | MeSH Dutch | MSHDUT2005 |
 
-- For drug names some common synonyms are missing in these vocabularies. Therefore I also selected:  
+More information on the sources can be found at: https://www.nlm.nih.gov/research/umls/sourcereleasedocs/index.html
+
+- For drug names some commonly used synonyms in Dutch langague are missing in these vocabularies. Therefore I also selected the following English sources:
   - `ATC_2022_22_09_06`
   - `DRUGBANK5.0_2022_08_01`
   - `RXNORM_20AA_220906F`.
-- Also, it's useful to include other categories useful for remapping source ontologies (such as Dutch SNOMED -> English SNOMED -> UMLS). The selection of Dutch and English drug names is done in a Jupyter Notebook in a later step, so it's okay to include some more non-Dutch sources. In our use-case, we added the following concepts:
+- Also, it's useful to include other categories useful for remapping source ontologies (such as Dutch SNOMED -> English SNOMED -> UMLS). The selection of Dutch and English drug names is done in a Jupyter Notebook in a later step, so it's okay to include some more non-Dutch sources in this step. At UMCU we included the following sources:
   - `SNOMEDCT_US_2022_09_01` (required for adding Dutch SNOMED terms in a later step)
   - `HPO2020_10_12`
   - `MTH`
