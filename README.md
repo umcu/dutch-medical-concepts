@@ -1,7 +1,7 @@
 # Dutch Medical Concepts
-This repository contains instructions and code to create a subset of Dutch medical concepts from UMLS, which includes MeSH, MedDRA, ICD-10 and ICPC, and SNOMED CT concepts. By combining Dutch names from UMLS, SNOMED CT and English drug names, a table of primary names, synonyms and abbreviations commonly used in Dutch medical language is generated: ~800,000 names in ~300,000 concepts. The concept table can be used for named entity recognition and linking, such as [MedCAT](https://github.com/CogStack/MedCAT), on Dutch medical text.
+This repository contains instructions and code to create a subset of Dutch medical names concepts from UMLS, which includes MeSH, MedDRA, ICD-10 and ICPC, and SNOMED CT concepts. By combining Dutch concepts from UMLS and SNOMED CT, a table of primary names, synonyms and abbreviations commonly used in Dutch medical language is generated: ~574,000 names in ~254,000 concepts (Fall 2022 releases of UMLS and SNOMED CT). Adding English drug names results in ~754,000 names in ~368,000 concepts. The resulting concept table can be used for named entity recognition and linking, such as [MedCAT](https://github.com/CogStack/MedCAT), to identify entities in Dutch medical text.
 
-A workflow for creating a concept table based solely on Dutch SNOMED CT  is also present in this repository.
+A workflow for creating a concept table based solely on Dutch SNOMED CT is also present in this repository.
 
 Data and usage licenses should be acquired from [UMLS Terminology Services](https://uts.nlm.nih.gov/uts/) and [SNOMED](https://mlds.ihtsdotools.org/).
 
