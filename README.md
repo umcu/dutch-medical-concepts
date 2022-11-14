@@ -40,7 +40,7 @@ See https://github.com/CogStack/MedCAT/tree/master/examples for a detailed expla
 
 I'm not sure whether the UMLS license allows for publishing snippets of UMLS data for demonstration purposes, so this repository uses mock data in the examples.
 
-### 1. Obtain license and download complete UMLS and 
+### 1. Obtain license and download complete UMLS 
 To download UMLS, visit the [NIH National Library of Medicine website](https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html). You'll have to apply for a license before you can download the files on https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html. In the following description I downloaded `Full Release (umls-2022AB-full.zip)`. The advantage over `UMLS Metathesaurus Full Subset` is that the Full Release includes MetamorphoSys which makes it possible to create a subset of UMLS prior loading the data in a SQL database. This significantly decreases the required disk space and processing time.
 
 ### 2. Decompress and install MetamorphoSys
