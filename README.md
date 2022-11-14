@@ -1,7 +1,11 @@
-# Dutch UMLS
-This repository contains instructions and code to create a subset of UMLS, including MeSH, MedDRA and ICD-10, of Dutch medical concepts. By combining UMLS concepts with Dutch SNOMED CT terms and English drug names, a list of terms commonly used in Dutch medical language can be generated: ~800,000 names in ~300,000 concepts. The resulting CSV can be used for named entity linking methods, such as [MedCAT](https://github.com/CogStack/MedCAT). Data and usage licenses should be acquired from [UMLS Terminology Services](https://uts.nlm.nih.gov/uts/) and [SNOMED](https://mlds.ihtsdotools.org/).
+# Dutch Medical Concepts
+This repository contains instructions and code to create a subset of Dutch medical names concepts from UMLS, which includes MeSH, MedDRA, ICD-10 and ICPC, and SNOMED CT concepts. By combining Dutch concepts from UMLS and SNOMED CT, a table of primary names, synonyms and abbreviations commonly used in Dutch medical language is generated: ~574,000 names in ~254,000 concepts (Fall 2022 releases of UMLS and SNOMED CT). Adding English drug names results in ~754,000 names in ~368,000 concepts. The resulting concept table can be used for named entity recognition and linking, such as [MedCAT](https://github.com/CogStack/MedCAT), to identify entities in Dutch medical text.
 
-This workflow was written for creating and filtering a set of Dutch UMLS concepts, but with some modifications it should be possible to use this for other languages.
+A workflow for creating a concept table based solely on Dutch SNOMED CT is also present in this repository.
+
+Data and usage licenses should be acquired from [UMLS Terminology Services](https://uts.nlm.nih.gov/uts/) and [SNOMED](https://mlds.ihtsdotools.org/).
+
+This workflow was written for creating and filtering a set of Dutch concepts, but with some modifications it should be possible to use this for other languages.
 
 ## Table of Contents
 - [Download Dutch MedCAT models](#download-dutch-medcat-models)
@@ -36,13 +40,13 @@ See https://github.com/CogStack/MedCAT/tree/master/examples for a detailed expla
 
 I'm not sure whether the UMLS license allows for publishing snippets of UMLS data for demonstration purposes, so this repository uses mock data in the examples.
 
-### 1. Obtain license and download complete UMLS
-To download UMLS, visit the [NIH National Library of Medicine website](https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html). You'll have to apply for a license before you can download the files. In the following description I downloaded the 2021AA release `umls-2021AA-full.zip`.
+### 1. Obtain license and download complete UMLS 
+To download UMLS, visit the [NIH National Library of Medicine website](https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html). You'll have to apply for a license before you can download the files on https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html. In the following description I downloaded `Full Release (umls-2022AB-full.zip)`. The advantage over `UMLS Metathesaurus Full Subset` is that the Full Release includes MetamorphoSys which makes it possible to create a subset of UMLS prior loading the data in a SQL database. This significantly decreases the required disk space and processing time.
 
 ### 2. Decompress and install MetamorphoSys
 Recommended folder structure for data (these folders are added to `.gitignore`):
 ```
-dutch-umls
+dutch-medical-concepts
 └───00_Archive
 └───01_Download
 └───02_ExtractSubset
@@ -50,43 +54,37 @@ dutch-umls
 └───04_ConceptDB
 ```
 
-After decompressing the `*-full.zip` file, go into the folder (`2021AA-full` for me) and decompress `mmsys.zip`. Afterwards, move the files in the new `mmsys` folder one level up, so they are in `2021AA-full`. Next, run MetamorphoSys (`./run_mac.sh` on macOS)
+After decompressing the `*-full.zip` file, go into the folder (`2022AB-full` in this example) and decompress `mmsys.zip`. Afterwards, move the files in the new `mmsys` folder one level up, so they are in `2022AB-full`. Next, run MetamorphoSys (`./run_mac.sh` on macOS)
 
 ### 3. Select UMLS concepts for Dutch medical language using MetamorphoSys
 MetamorphoSys is used to install a subset of UMLS. During the installation process it is possible to select multiple sources, and thereby to craft a specific subset for your use case. In our case, our primary goal is to select the Dutch terms and we add some English sources for concept categories for common used English names in Dutch (such as drug names).
 
 - Select `Install UMLS`.
-- Select destination directory.
+- Select destination directory, for example `./02_ExtractSubset/2022AB/`
 - Keep `Metathesaurus` checked, and uncheck `Semantic Network` and `SPECIALIST Lexicon & Lexical Tools`. Select `OK`.
 - Select `New Configuration...`, click `Accept` and click `Ok`. The `Default Subset` does not matter because we are making our own subset in the next step.
 - In the `Output Options` tab, select `MySQL 5.6` under `Select database`.
-- In the `Source List` tab, Select `Select sources to INCLUDE in subset`. Sort the sources on the language column and at least select the 7 Dutch sources. To select multiple sources, hold the CMD key on macOS. In the popup window that will ask if you also want to include related sources, click `Cancel`. Statistics for Dutch sources in `UMLS 2021AA-full`:
+- In the `Source List` tab, Select `Select sources to INCLUDE in subset`. Sort the sources on the language column and at least select the 7 Dutch sources. To select multiple sources, hold the CMD key on macOS. In the popup window that will ask if you also want to include related sources, click `Cancel`. The Dutch sources I included were:
 
-| Source name | Source ID | Last updated | Concepts |
-|---|---|---|---|
-| ICD10, Dutch Translation, 200403 | ICD10DUT_200403 | 2005 | 10697 |
-| ICPC2-ICD10 Thesaurus, Dutch Translation | ICPC2ICD10DUT | 2005 | 35466 |
-| ICPC2E Dutch | ICPC2EDUT_200203 | 2005 | 685 |
-| ICPC, Dutch Translation, 1993 | ICPCDUT_1993 | 1999 | 722 |
-| LOINC Linguistic Variant - Dutch, Netherlands | LNC-NL-NL_267 | 2020 (twice a year) | 53938 |
-| MedDRA Dutch | MDRDUT22_1 | 2020 (twice a year) | 56914 |
-| MeSH Dutch | MSHDUT2005 | 2005 | 20615 |
+| Source name | Source ID |
+|---|---|
+| ICD10, Dutch Translation, 200403 | ICD10DUT_200403 |
+| ICPC2-ICD10 Thesaurus, Dutch Translation | ICPC2ICD10DUT_200412 |
+| ICPC2E Dutch | ICPC2EDUT_200203 |
+| ICPC, Dutch Translation, 1993 | ICPCDUT_1993 |
+| LOINC Linguistic Variant - Dutch, Netherlands | LNC-NL-NL_273 |
+| MedDRA Dutch | MDRDUT25_0 |
+| MeSH Dutch | MSHDUT2005 |
 
-- For drug names some common synonyms are missing in these vocabularies. Therefore I also selected:  
-  - `ATC_2021_21_03_01`
-  - `DRUGBANK5.0_2021_01_29`
-  - `RXNORM_20AA_210301F`.
-- Also, it's useful to include other categories useful for remapping source ontologies (such as Dutch SNOMED -> English SNOMED -> UMLS). The selection of Dutch and English drug names is done in a Jupyter Notebook in a later step, so it's okay to include some more non-Dutch sources. In our use-case, we added the following concepts:
-  - `SNOMEDCT_US_2021_03_01` (required for adding Dutch SNOMED terms in a later step)
-  - `DSM-5_2015`
-  - `GO2020_05_02`
-  - `GS_2021_02_09`
-  - `HGNC2020_05`
+More information on the sources can be found at: https://www.nlm.nih.gov/research/umls/sourcereleasedocs/index.html
+
+- For drug names some commonly used synonyms in Dutch langague are missing in these vocabularies. Therefore I also selected the following English sources:
+  - `ATC_2022_22_09_06`
+  - `DRUGBANK5.0_2022_08_01`
+  - `RXNORM_20AA_220906F`.
+- Also, it's useful to include other categories useful for remapping source ontologies (such as Dutch SNOMED -> English SNOMED -> UMLS). The selection of Dutch and English drug names is done in a Jupyter Notebook in a later step, so it's okay to include some more non-Dutch sources in this step. At UMCU we included the following sources:
+  - `SNOMEDCT_US_2022_09_01` (required for adding Dutch SNOMED terms in a later step)
   - `HPO2020_10_12`
-  - `ICD10AM_2000`
-  - `ICD10CM_2021`
-  - `ICD10PCS_2021`
-  - `MDR23_1`
   - `MTH`
 - In the `Suppressibility` tab, make sure the obsolete terms are suppressed (`LO` for LOINC, `OL` for MedDRA; see https://www.nlm.nih.gov/research/umls/knowledge_sources/metathesaurus/release/abbreviations.html). In my configuration, I unsuppressed the "Abbreviation in any source vocabulary" (`AB`) concepts from MedDRA.
 - On macOS, in the top bar, select `Advanced Suppressibility Options` and check all checkboxes. This makes sure the suppressed terms are excluded from the subset.
@@ -103,12 +101,12 @@ cp .env-example .env
 # Set local file paths & MySQL root password in .env
 
 # Set MySQL loading config settings 
-vim <local_umls_subset_dir>/2021AA/META/populate_mysql_db.sh
+vim ./02_ExtractSubset/2022AB/META/populate_mysql_db.sh
 
-# MYSQL_HOME=/usr
-# user=root
-# password=<secret_password>
-# db_name=umls
+MYSQL_HOME=/usr
+user=root
+password=${MYSQL_ROOT_PASSWORD}
+db_name=${MYSQL_DATABASE}
 
 # Start MySQL container in Docker
 docker-compose up -d
@@ -117,7 +115,7 @@ docker-compose up -d
 docker exec -it umls bash
 
 # Execute mysql loading script
-cd /src_files/2021AA/META/
+cd /src_files/2022AB/META/
 bash populate_mysql_db.sh
 ```
 
