@@ -13,7 +13,7 @@ The resulting concept tables can be used in named entity recognition and linking
 Data and licenses should be acquired from [UMLS Terminology Services](https://uts.nlm.nih.gov/uts/) and [SNOMED MLDS](https://mlds.ihtsdotools.org/). 
 
 ## Table of Contents
-- [Download Dutch MedCAT models](#download-dutch-medcat-models)
+- [Download pre-made Dutch MedCAT models](#download-pre-made-dutch-medcat-models)
 - [Folder structure](#folder-structure)
 - [Generate UMLS concept table](#generate-umls-concept-table)
 	- [1. Obtain license and download complete UMLS](#1-obtain-license-and-download-complete-umls)
@@ -25,8 +25,8 @@ Data and licenses should be acquired from [UMLS Terminology Services](https://ut
 - [Generate HPO concept table](#generate-hpo-concept-table)
 - [Generate MedCAT models](#generate-medcat-models)
 
-## Download Dutch MedCAT models
-On https://github.com/CogStack/MedCAT it's possible to authenticate via UMLS Terminology Services to verify the user's UMLS license and download a MedCAT model based on the Dutch UMLS concepts generated in this repository.
+## Download pre-made Dutch MedCAT models
+To download a pre-made Dutch MedCAT model based on the Dutch UMLS concept table generated in this repository, navigate to the MedCAT source repository (https://github.com/CogStack/MedCAT) and click on the link for the Dutch model. This requires authentication via UMLS Terminology Services to verify the user's UMLS license.
 
 ## Folder structure
 The methods of this repository require a number of input files, which should be downloaded by the user, and intermediate and output files are generated. This repository contains a folder structure that can be used for storing these files. The contents of these folders, except for `05_CustomChanges`, are added not tracked by Git, which makes it easier to replace input files or recreate output files.
@@ -189,7 +189,7 @@ Method in: [dutch-snomed_to_concept-table.ipynb](dutch-snomed_to_concept-table.i
 License and source files can be acquired from [SNOMED MLDS](https://mlds.ihtsdotools.org/).
 
 ## Generate HPO concept table
-Method in: [dutch-snomed_to_concept-table.ipynb](dutch-snomed_to_concept-table.ipynb)
+Method in: [dutch-hpo_to_concept-table.ipynb](dutch-hpo_to_concept-table.ipynb)
 
 Most HPO names were translated to Dutch by Radboudumc's Clinical Genetics team via [CrowdIn](https://crowdin.com/project/hpo-translation/nl). This is the primary source in creating a concept table of Dutch HPO concepts. In an effort to make a more complete set of synonyms, names from UMLS and SNOMED, as well as some of our own translations, are added.
 
