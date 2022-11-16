@@ -1,24 +1,40 @@
 # Dutch Medical Concepts
-This repository contains instructions and code to create a subset of Dutch medical names concepts from UMLS, which includes MeSH, MedDRA, ICD-10 and ICPC, and SNOMED CT concepts. By combining Dutch concepts from UMLS and SNOMED CT, a table of primary names, synonyms and abbreviations commonly used in Dutch medical language is generated: ~574,000 names in ~254,000 concepts (Fall 2022 releases of UMLS and SNOMED CT). Adding English drug names results in ~754,000 names in ~368,000 concepts. The resulting concept table can be used for named entity recognition and linking, such as [MedCAT](https://github.com/CogStack/MedCAT), to identify entities in Dutch medical text.
+This repository contains instructions and code to create a subset of Dutch medical names concepts from UMLS, which includes MeSH, MedDRA, ICD-10 and ICPC, and SNOMED CT concepts. By combining Dutch concepts from UMLS and SNOMED CT, a table of primary names, synonyms and abbreviations commonly used in Dutch medical language is generated. A workflow for creating a concept table based solely on Dutch SNOMED CT, as well as HPO, is also present in this repository. The resulting concept table can be used for named entity recognition and linking, such as [MedCAT](https://github.com/CogStack/MedCAT), to identify entities in Dutch medical text. This workflow was written for creating and filtering a set of Dutch concepts, but with some modifications it should be possible to use this for other languages.
 
-A workflow for creating a concept table based solely on Dutch SNOMED CT is also present in this repository.
+| Ontology | Number of concepts | Number of names | Primary source |
+| Dutch UMLS | 254835 | 574475 | UMLS 2022AB |
+| Dutch UMLS with English drug names | 367913 | 754326 | UMLS 2022AB |
+| Dutch SNOMED | 230277 | 521118 | SNOMED CT Netherlands Edition September 2022 v1.0|
+| Dutch HPO | 13360 | 29164 | [Dutch translations](https://crowdin.com/project/hpo-translation/nl) |
 
-Data and usage licenses should be acquired from [UMLS Terminology Services](https://uts.nlm.nih.gov/uts/) and [SNOMED](https://mlds.ihtsdotools.org/).
-
-This workflow was written for creating and filtering a set of Dutch concepts, but with some modifications it should be possible to use this for other languages.
+Data and licenses should be acquired from [UMLS Terminology Services](https://uts.nlm.nih.gov/uts/) and [SNOMED MLDS](https://mlds.ihtsdotools.org/). 
 
 ## Table of Contents
 - [Download Dutch MedCAT models](#download-dutch-medcat-models)
+- [Folder structure](#folder-structure)
 - [Generate UMLS concept table](#generate-umls-concept-table)
 	- [1. Obtain license and download complete UMLS](#1-obtain-license-and-download-complete-umls)
 	- [2. Decompress and install MetamorphoSys](#2-decompress-and-install-metamorphosys)
 	- [3. Select UMLS concepts for Dutch medical language using MetamorphoSys](#3-select-umls-concepts-for-dutch-medical-language-using-metamorphosys)
 	- [4. Load all terms in a SQL database](#4-load-all-terms-in-a-sql-database)
 	- [5. Create concept table](#5-create-concept-table)
+- [Generate SNOMED concept table](#generate-snomed-concept-table)
+- [Generate HPO concept table](#generate-hpo-concept-table)
 - [Generate MedCAT models](#generate-medcat-models)
 
 ## Download Dutch MedCAT models
-Via https://github.com/CogStack/MedCAT it's possible to authenticate via UMLS Terminology Services to verify your UMLS license and download MedCAT models that include the Dutch UMLS terms generated in this repository.
+On https://github.com/CogStack/MedCAT it's possible to authenticate via UMLS Terminology Services to verify the user's UMLS license and download a MedCAT model based on the Dutch UMLS concepts generated in this repository.
+
+## Folder structure
+The methods of this repository require a number of input files, which should be downloaded by the user, and intermediate and output files are generated. This repository contains a folder structure that can be used for storing these files. The contents of these folders, except for `05_CustomChanges`, are added not tracked by Git, which makes it easier to replace input files or recreate output files.
+```
+dutch-medical-concepts
+└───01_Download
+└───02_ExtractSubset
+└───03_SqlDB
+└───04_ConceptDB
+└───05_CustomChanges
+```
 
 ## Generate UMLS concept table
 ![Data Flow](data-flow.png)
@@ -44,17 +60,7 @@ I'm not sure whether the UMLS license allows for publishing snippets of UMLS dat
 To download UMLS, visit the [NIH National Library of Medicine website](https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html). You'll have to apply for a license before you can download the files on https://www.nlm.nih.gov/research/umls/licensedcontent/umlsknowledgesources.html. In the following description I downloaded `Full Release (umls-2022AB-full.zip)`. The advantage over `UMLS Metathesaurus Full Subset` is that the Full Release includes MetamorphoSys which makes it possible to create a subset of UMLS prior loading the data in a SQL database. This significantly decreases the required disk space and processing time.
 
 ### 2. Decompress and install MetamorphoSys
-Recommended folder structure for data (these folders are added to `.gitignore`):
-```
-dutch-medical-concepts
-└───00_Archive
-└───01_Download
-└───02_ExtractSubset
-└───03_SqlDB
-└───04_ConceptDB
-```
-
-After decompressing the `*-full.zip` file, go into the folder (`2022AB-full` in this example) and decompress `mmsys.zip`. Afterwards, move the files in the new `mmsys` folder one level up, so they are in `2022AB-full`. Next, run MetamorphoSys (`./run_mac.sh` on macOS)
+After decompressing the `*-full.zip` file, go into the folder (e.g. `01_Download/2022AB-full` in this example) and decompress `mmsys.zip`. Afterwards, move the files in the new `mmsys` folder one level up, so they are in `2022AB-full`. Next, run MetamorphoSys (`./run_mac.sh` on macOS)
 
 ### 3. Select UMLS concepts for Dutch medical language using MetamorphoSys
 MetamorphoSys is used to install a subset of UMLS. During the installation process it is possible to select multiple sources, and thereby to craft a specific subset for your use case. In our case, our primary goal is to select the Dutch terms and we add some English sources for concept categories for common used English names in Dutch (such as drug names).
@@ -173,6 +179,12 @@ C0000002,Abattoir,ONTOLOGY1,PN,T002
 C0000002,Abattoirs,ONTOLOGY1,SY,T002
 C0000003,Abbreviated Injury Scale,ONTOLOGY1,PN,T003
 ```
+
+## Generate SNOMED concept table
+A license and source files can be acquired from [SNOMED MLDS](https://mlds.ihtsdotools.org/). Data transformation is done in [dutch-snomed_to_concept-table](dutch-snomed_to_concept-table).
+
+## Generate HPO concept table
+See [dutch-hpo_to_concept-table](dutch-hpo_to_concept-table). Dutch names from UMLS and SNOMED are also added to HPO concepts. Therefore, this method is dependent on the UMLS and SNOMED notebooks.
 
 ## Generate MedCAT models
 To generate MedCAT models from the concept table, see the instructions in the [MedCAT](https://github.com/CogStack/MedCAT) repository. For Dutch language, use these parameters in the configuration:
