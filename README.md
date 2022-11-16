@@ -1,11 +1,11 @@
 # Dutch Medical Concepts
-This repository contains instructions and code to create a subset of Dutch medical names concepts from UMLS, which includes MeSH, MedDRA, ICD-10 and ICPC, and SNOMED CT concepts. By combining Dutch concepts from UMLS and SNOMED CT, a table of primary names, synonyms and abbreviations commonly used in Dutch medical language is generated. A workflow for creating a concept table based solely on Dutch SNOMED CT, as well as HPO, is also present in this repository. The resulting concept table can be used for named entity recognition and linking, such as [MedCAT](https://github.com/CogStack/MedCAT), to identify entities in Dutch medical text. This workflow was written for creating and filtering a set of Dutch concepts, but with some modifications it should be possible to use this for other languages.
+This repository contains instructions and code to create a subset of Dutch medical names concepts from UMLS, which includes MeSH, MedDRA, ICD-10 and ICPC, and SNOMED CT concepts. By combining Dutch concepts from UMLS and SNOMED CT, a table of primary names, synonyms and abbreviations commonly used in Dutch medical language is generated. A workflow for creating a concept table based solely on Dutch SNOMED CT is also present in this repository. The resulting concept table can be used for named entity recognition and linking, such as [MedCAT](https://github.com/CogStack/MedCAT), to identify entities in Dutch medical text. This workflow was written for creating and filtering a set of Dutch concepts, but with some modifications it should be possible to use this for other languages.
 
 | Ontology | Number of concepts | Number of names | Primary source |
+| - | - | - | - |
 | Dutch UMLS | 254835 | 574475 | UMLS 2022AB |
 | Dutch UMLS with English drug names | 367913 | 754326 | UMLS 2022AB |
-| Dutch SNOMED | 230277 | 521118 | SNOMED CT Netherlands Edition September 2022 v1.0|
-| Dutch HPO | 13360 | 29164 | [Dutch translations](https://crowdin.com/project/hpo-translation/nl) |
+| Dutch SNOMED | 230277 | 521118 | SNOMED CT Netherlands Edition September 2022 v1.0 |
 
 Data and licenses should be acquired from [UMLS Terminology Services](https://uts.nlm.nih.gov/uts/) and [SNOMED MLDS](https://mlds.ihtsdotools.org/). 
 
@@ -19,7 +19,6 @@ Data and licenses should be acquired from [UMLS Terminology Services](https://ut
 	- [4. Load all terms in a SQL database](#4-load-all-terms-in-a-sql-database)
 	- [5. Create concept table](#5-create-concept-table)
 - [Generate SNOMED concept table](#generate-snomed-concept-table)
-- [Generate HPO concept table](#generate-hpo-concept-table)
 - [Generate MedCAT models](#generate-medcat-models)
 
 ## Download Dutch MedCAT models
@@ -181,10 +180,9 @@ C0000003,Abbreviated Injury Scale,ONTOLOGY1,PN,T003
 ```
 
 ## Generate SNOMED concept table
-A license and source files can be acquired from [SNOMED MLDS](https://mlds.ihtsdotools.org/). Data transformation is done in [dutch-snomed_to_concept-table](dutch-snomed_to_concept-table).
+Method in: [dutch-snomed_to_concept-table.ipynb](dutch-snomed_to_concept-table.ipynb)
 
-## Generate HPO concept table
-See [dutch-hpo_to_concept-table](dutch-hpo_to_concept-table). Dutch names from UMLS and SNOMED are also added to HPO concepts. Therefore, this method is dependent on the UMLS and SNOMED notebooks.
+License and source files can be acquired from [SNOMED MLDS](https://mlds.ihtsdotools.org/).
 
 ## Generate MedCAT models
 To generate MedCAT models from the concept table, see the instructions in the [MedCAT](https://github.com/CogStack/MedCAT) repository. For Dutch language, use these parameters in the configuration:
