@@ -1,5 +1,5 @@
 # Dutch Medical Concepts
-This repository contains instructions and code to create concept tables of Dutch medical names, such as primary names, synonyms, abbreviations, and common misspellings. By basing a concept table on UMLS, which includes MeSH, MedDRA, ICD-10 and ICPC, and adding SNOMED CT and our own translations, a comprehensive set of words commonly used in Dutch medical language is generated. Workflows for creating SNOMED and HPO based concept tables are also in this repository.
+This repository contains instructions and code to create concept tables of Dutch medical names, such as primary names, synonyms, abbreviations, and common misspellings. By basing a concept table on UMLS, which includes MeSH, MedDRA, ICD-10 and ICPC, and adding SNOMED CT and a few manually added names, a comprehensive set of words commonly used in Dutch medical language is generated. Workflows for creating SNOMED and HPO based concept tables are also in this repository.
 
 The resulting concept tables can be used in named entity recognition and linking methods, such as MedCAT, to identify entities in Dutch medical text. 
 
@@ -193,7 +193,7 @@ License and source files can be acquired from [SNOMED MLDS](https://mlds.ihtsdot
 ## Generate HPO concept table
 Method in: [dutch-hpo_to_concept-table.ipynb](dutch-hpo_to_concept-table.ipynb)
 
-Most HPO names were translated to Dutch by Radboudumc's Clinical Genetics team via [CrowdIn](https://crowdin.com/project/hpo-translation/nl). This is the primary source in creating a concept table of Dutch HPO concepts. In an effort to make a more complete set of synonyms, names from UMLS and SNOMED, as well as some of our own translations, are added.
+Most HPO names were translated to Dutch by Radboudumc's Clinical Genetics team via [CrowdIn](https://crowdin.com/project/hpo-translation/nl). This is the primary source in creating a concept table of Dutch HPO concepts. In an effort to make a more complete set of synonyms, names from UMLS and SNOMED, and a few manually created names, are added.
 
 ## Generate MedCAT models
 To generate MedCAT models from the concept table, see the instructions in the [MedCAT](https://github.com/CogStack/MedCAT) repository. For Dutch language, use these parameters in the configuration:
