@@ -54,13 +54,17 @@ C0179267,antidecubitusmatras,A,UMCU|SNOMEDCT_NL
 C0234225,pijnvrij,A,UMCU
 C0234225,geen pijn,A,UMCU
 C4050142,NRS,A,UMCU
-C5548091,pijn houdbaar,A,UMCU
 C5548091,NRS onder controle,A,UMCU
+C5548091,NRS is onder controle,A,UMCU
 C5548091,pijn onder controle,A,UMCU
-C5548091,pijn is houdbaar,A,UMCU
-C5548091,pijn is niet houdbaar,A,UMCU
-C0747149,onhoudbare pijn,A,UMCU
-C0747149,pijn is niet houdbaar,A,UMCU
-C0747149,pijn niet houdbaar,A,UMCU
-C0747149,pijn is onhoudbaar,A,UMCU
-C0747149,pijn onhoudbaar,A,UMCU
+C5548091,pijn is onder controle,A,UMCU
+C3650806,pijn niet onder controle,A,UMCU
+C3650806,pijn is niet onder controle,A,UMCU
+C0582151,houdbare pijn,A,UMCU
+C0582151,pijn houdbaar,A,UMCU
+C0582151,pijn is houdbaar,A,UMCU
+C0582152,onhoudbare pijn,A,UMCU
+C0582152,pijn onhoudbaar,A,UMCU
+C0582152,pijn is onhoudbaar,A,UMCU
+C0582152,pijn niet houdbaar,A,UMCU
+C0582152,pijn is niet houdbaar,A,UMCU
