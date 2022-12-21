@@ -1,0 +1,95 @@
+cui,str,tty,sab
+C0456984,uitslag,A,UMCU
+C0019080,bloedt,A,UMCU
+C0019080,bloeden,A,UMCU
+C0225844,RA,A,UMCU
+C0225883,RV,A,UMCU
+C0225897,LV,A,UMCU
+C0011206,delier,P,UMCU
+C0003232,antibiotica,P,UMCU
+C0000970,pcm,A,UMCU
+C0002769,epi,A,UMCU
+C0002769,EPI,A,UMCU
+C0002769,epiduraal,A,UMCU
+C0002771,pijn medicatie,A,UMCU
+C0002771,pijnmedicatie,A,UMCU
+C0002771,pijnstilling,A,UMCU
+C0004604,pijn in de rug,A,UMCU
+C0004604,pijnklachten rug,A,UMCU
+C0006400,bupi,A,UMCU
+C0008031,POB,A,UMCU
+C0008031,pob,A,UMCU
+C0012091,diclo,A,UMCU
+C0018681,hoofdpijnklachten,A,UMCU
+C0030049,oxy,A,UMCU
+C0030049,oxynorm,A,UMCU
+C0030193,pijnklachten,A,UMCU
+C0030193,pijnlijk,A,UMCU
+C0030193,pijnlijke,A,UMCU
+C0078944,dipidolorpomp,A,UMCU
+C0232492,pijn in de bovenbuik,A,UMCU
+C0234238,zeurderig gevoel,A,UMCU
+C0242429,last van de keel,A,UMCU
+C0242429,pijnklachten keel,A,UMCU
+C0242429,pijnlijke keel,A,UMCU
+C0458254,blaaskrampen,A,UMCU
+C0458254,krampen,A,UMCU
+C0458254,spierkrampen,A,UMCU
+C0497172,last van zijn buik,A,UMCU
+C0591917,oramorph,A,UMCU
+C0701926,ketanest,A,UMCU
+C0809927,dipi,A,UMCU
+C0877617,pijn door darmkrampen,A,UMCU
+C0181226,hot pack,A,UMCU
+C0181226,hot-pack,A,UMCU
+C0181226,hot packs,A,UMCU
+C0181226,hot-packs,A,UMCU
+C0180006,cold pack,A,UMCU
+C0180006,cold-pack,A,UMCU
+C0180006,coldpacks,A,UMCU
+C0180006,cold-packs,A,UMCU
+C0179267,AD matras,A,UMCU
+C0179267,antidecubitus matras,A,UMCU
+C0179267,antidecubitusmatras,A,UMCU|SNOMEDCT_NL
+C0278138,licht pijnlijk,A,UMCU
+C0278138,lichtelijke pijnklachten,A,UMCU
+C0278138,lichte pijnklachten,A,UMCU
+C0278139,matige pijnklachten,A,UMCU
+C0278140,erg pijnlijk,A,UMCU
+C0278140,veel pijn,A,UMCU
+C0278140,erg veel pijn,A,UMCU
+C0278140,ernstige pijnklachten,A,UMCU
+C0278140,veel pijnklachten,A,UMCU
+C0278140,erg veel pijnklachten,A,UMCU
+C0278143,intense pijnklachten,A,UMCU
+C0234225,pijnvrij,A,UMCU
+C0234225,geen pijn,A,UMCU
+C0234225,geen pijnklachten,A,UMCU
+C4050142,NRS,A,UMCU
+C5548091,NRS onder controle,A,UMCU
+C5548091,NRS is onder controle,A,UMCU
+C5548091,pijn onder controle,A,UMCU
+C5548091,pijn is onder controle,A,UMCU
+C5548091,pijnklachten onder controle,A,UMCU
+C5548091,pijnklachten zijn onder controle,A,UMCU
+C3650806,pijn niet onder controle,A,UMCU
+C3650806,pijn is niet onder controle,A,UMCU
+C3650806,pijnklachten niet onder controle,A,UMCU
+C3650806,pijnklachten zijn niet onder controle,A,UMCU
+C0582151,houdbare pijn,A,UMCU
+C0582151,houdbare pijnklachten,A,UMCU
+C0582151,pijn houdbaar,A,UMCU
+C0582151,pijn is houdbaar,A,UMCU
+C0582151,pijnklachten houdbaar,A,UMCU
+C0582151,pijnklachten zijn houdbaar,A,UMCU
+C0582151,pijn is nog houdbaar,A,UMCU
+C0582152,onhoudbare pijn,A,UMCU
+C0582152,onhoudbare pijnklachten,A,UMCU
+C0582152,pijn onhoudbaar,A,UMCU
+C0582152,pijn is onhoudbaar,A,UMCU
+C0582152,pijn niet houdbaar,A,UMCU
+C0582152,pijn is niet houdbaar,A,UMCU
+C0582152,pijnklachten onhoudbaar,A,UMCU
+C0582152,pijnklachten zijn onhoudbaar,A,UMCU
+C0582152,pijnklachten zijn niet houdbaar,A,UMCU
+C0582152,pijn is nog niet houdbaar,A,UMCU
