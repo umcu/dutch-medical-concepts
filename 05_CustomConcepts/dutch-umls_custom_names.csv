@@ -26,6 +26,7 @@ C0030049,oxynorm,A,UMCU
 C0030193,pijnklachten,A,UMCU
 C0030193,pijnlijk,A,UMCU
 C0030193,pijnlijke,A,UMCU
+C0030193,pijn aanwezig,A,UMCU
 C0078944,dipidolorpomp,A,UMCU
 C0232492,pijn in de bovenbuik,A,UMCU
 C0234238,zeurderig gevoel,A,UMCU
@@ -54,6 +55,7 @@ C0179267,antidecubitusmatras,A,UMCU|SNOMEDCT_NL
 C0278138,licht pijnlijk,A,UMCU
 C0278138,lichtelijke pijnklachten,A,UMCU
 C0278138,lichte pijnklachten,A,UMCU
+C0278138,lichte pijn aanwezig,A,UMCU
 C0278139,matige pijnklachten,A,UMCU
 C0278140,erg pijnlijk,A,UMCU
 C0278140,veel pijn,A,UMCU
@@ -61,6 +63,10 @@ C0278140,erg veel pijn,A,UMCU
 C0278140,ernstige pijnklachten,A,UMCU
 C0278140,veel pijnklachten,A,UMCU
 C0278140,erg veel pijnklachten,A,UMCU
+C0278140,veel pijn aanwezig,A,UMCU
+C0278141,ondragelijke pijn,A,UMCU
+C0278141,pijn is ondragelijk,A,UMCU
+C0278141,pijn is ondraaglijk,A,UMCU
 C0278143,intense pijnklachten,A,UMCU
 C0234225,pijnvrij,A,UMCU
 C0234225,geen pijn,A,UMCU
@@ -83,6 +89,7 @@ C0582151,pijn is houdbaar,A,UMCU
 C0582151,pijnklachten houdbaar,A,UMCU
 C0582151,pijnklachten zijn houdbaar,A,UMCU
 C0582151,pijn is nog houdbaar,A,UMCU
+C0582151,pijn aanwezig maar houdbaar,A,UMCU
 C0582152,onhoudbare pijn,A,UMCU
 C0582152,onhoudbare pijnklachten,A,UMCU
 C0582152,pijn onhoudbaar,A,UMCU
@@ -93,3 +100,6 @@ C0582152,pijnklachten onhoudbaar,A,UMCU
 C0582152,pijnklachten zijn onhoudbaar,A,UMCU
 C0582152,pijnklachten zijn niet houdbaar,A,UMCU
 C0582152,pijn is nog niet houdbaar,A,UMCU
+C0015846,fentanylpleister,A,UMCU
+C0015846,fentanyl pleister,A,UMCU
+C5141269,pijn toename,A,UMCU
